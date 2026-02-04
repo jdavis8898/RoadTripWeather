@@ -72,7 +72,7 @@ npm run build
 
 ## Technologies Used
 
-- **React** - Frontend framework
+- **React** - Frontend library
 - **React-Leaflet** - Interactive map component
 - **Leaflet** - Map rendering library
 - **OpenStreetMap** - Map tiles provider

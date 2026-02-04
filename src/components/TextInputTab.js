@@ -25,14 +25,24 @@ const TextInputTab = () => {
     }
   };
 
-  const fetchWeather = async () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validLocations = locations.filter(loc => loc.location.trim() && loc.time.trim());
+    if (validLocations.length === 0) {
+      alert('Please enter at least one location and time');
+      return;
+    }
+    fetchWeatherForLocations(validLocations);
+  };
+
+  const fetchWeatherForLocations = async (locationsToFetch) => {
     setLoading(true);
     setWeatherResults([]);
     
     // Simulate API call - in production, replace with actual weather API
     try {
       const results = await Promise.all(
-        locations.map(async (loc) => {
+        locationsToFetch.map(async (loc) => {
           // Mock weather data
           await new Promise(resolve => setTimeout(resolve, 500));
           return {
@@ -51,16 +61,6 @@ const TextInputTab = () => {
       console.error('Error fetching weather:', error);
     }
     setLoading(false);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validLocations = locations.filter(loc => loc.location.trim() && loc.time.trim());
-    if (validLocations.length === 0) {
-      alert('Please enter at least one location and time');
-      return;
-    }
-    fetchWeather();
   };
 
   return (

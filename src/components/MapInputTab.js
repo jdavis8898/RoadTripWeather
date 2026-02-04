@@ -51,14 +51,24 @@ const MapInputTab = () => {
     }
   };
 
-  const fetchWeather = async () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const validMarkers = markers.filter(marker => marker.time.trim());
+    if (validMarkers.length === 0) {
+      alert('Please add at least one pin and set its time');
+      return;
+    }
+    fetchWeatherForMarkers(validMarkers);
+  };
+
+  const fetchWeatherForMarkers = async (markersToFetch) => {
     setLoading(true);
     setWeatherResults([]);
     
     // Simulate API call - in production, replace with actual weather API
     try {
       const results = await Promise.all(
-        markers.map(async (marker) => {
+        markersToFetch.map(async (marker) => {
           // Mock weather data
           await new Promise(resolve => setTimeout(resolve, 500));
           return {
@@ -77,16 +87,6 @@ const MapInputTab = () => {
       console.error('Error fetching weather:', error);
     }
     setLoading(false);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validMarkers = markers.filter(marker => marker.time.trim());
-    if (validMarkers.length === 0) {
-      alert('Please add at least one pin and set its time');
-      return;
-    }
-    fetchWeather();
   };
 
   return (
