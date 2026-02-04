@@ -6,4 +6,4 @@ import '@testing-library/jest-dom';
 
 // Mock CSS imports
 const mockCSSModule = {};
-require.extensions['.css'] = () => mockCSSModule;
+require['.css'] = () => mockCSSModule;
